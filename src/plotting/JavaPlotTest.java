@@ -29,6 +29,9 @@ public class JavaPlotTest
 	public void plot()
 	{
 		double[][] dataSet={{-1.00, 2.021},{-0.99, 2.22113},{-0.98, 2.0998},{-0.97, 2.02111},{0.99, -2.434}};
+		
+		
+		
 		String plot = "0.37 - 2.28 * x - 0.55 * x**2";
 
 		JavaPlot p = new JavaPlot();
