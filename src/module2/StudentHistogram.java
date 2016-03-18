@@ -1,4 +1,4 @@
-package histogram;
+package module2;
 
 import graph.GraphUtils;
 import graph.MGraph;
