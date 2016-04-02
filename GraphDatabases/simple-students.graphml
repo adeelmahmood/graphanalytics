@@ -1,0 +1,39 @@
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.1/graphml.xsd">
+<key id="sex" for="node" attr.name="sex" attr.type="string"/>
+<key id="school" for="node" attr.name="school" attr.type="string"/>
+<key id="personid" for="node" attr.name="personid" attr.type="string"/>
+<key id="grade" for="node" attr.name="grade" attr.type="string"/>
+<key id="type" for="node" attr.name="type" attr.type="string"/>
+<key id="race" for="node" attr.name="race" attr.type="string"/>
+<key id="w" for="edge" attr.name="w" attr.type="string"/>
+<graph id="G" edgedefault="directed">
+	<node id="A">
+	</node>
+	<node id="B">
+	</node>
+	<node id="C">
+	</node>
+	<node id="D">
+	</node>
+	<edge id="e0" source="A" target="B" label="ab">
+	</edge>
+	<edge id="e1" source="A" target="C" label="ac">
+	</edge>
+	<edge id="e2" source="A" target="D" label="ad">
+	</edge>
+	<edge id="e3" source="B" target="A" label="ba">
+	</edge>
+	<edge id="e4" source="B" target="C" label="bc">
+	</edge>
+	<edge id="e5" source="B" target="D" label="bd">
+	</edge>
+	<edge id="e6" source="C" target="A" label="ca">
+	</edge>
+	<edge id="e7" source="C" target="B" label="cb">
+	</edge>
+	<edge id="e8" source="D" target="A" label="cf">
+	</edge>
+	<edge id="e9" source="D" target="B" label="da">
+	</edge>
+</graph>
+</graphml>

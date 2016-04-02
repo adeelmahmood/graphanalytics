@@ -14,44 +14,69 @@ public class PageRank {
 	private static final String GRAPH_FILE = BASE_DIRECTORY + "/" + graphName + ".graphml";
 	private static final String OUT_GRAPH_FILE = BASE_DIRECTORY + "/" + graphName + ".out.graphml";
 
-	private static final int ITERATIONS = 1;
+	private static final int ITERATIONS = 20;
 	private static final String PR = "PR";
+	private static final String PR_TEMP = "PR_TEMP";
+	private static final double S = 0.8D;
 
 	public PageRank() {
 		graph = GraphUtils.readGraph(GRAPH_FILE);
+
+		// count the number of vertices
 		int n = count(graph.getVertices());
 
+		// initialize rank for all vertices
 		for (Vertex vertex : graph.getVertices()) {
-			vertex.setProperty(PR, 0.8);
+			vertex.setProperty(PR, 1D / n);
 		}
 
-		for (Vertex vertex : graph.getVertices()) {
-			System.out.println("Processing vertex " + vertex);
-			double values = 0;
+		// page rank calculation iterations
+		for (int i = 1; i <= ITERATIONS; i++) {
+			// process each vertex
+			for (Vertex vertex : graph.getVertices()) {
+				double values = 0;
 
-			for (Vertex v : graph.getVertices()) {
-				if (v == vertex)
-					continue;
+				// calculate rank from all other vertices
+				for (Vertex v : graph.getVertices()) {
+					if (v == vertex)
+						continue;
 
-				// System.out.println("Checking vertex " + v);
-				int outEdges = count(v.getEdges(Direction.OUT));
-				if (outEdges > 0) {
-					// System.out.println("Out edges " + outEdges);
+					// get current level rank
 					double rank = v.getProperty(PR);
-					// System.out.println("Previous rank " + rank);
-					double value = (1D / outEdges) * rank;
-					// System.out.println("Value " + value);
+					double value = 0;
+
+					// count the number of out edges from this vertex
+					int outEdges = count(v.getEdges(Direction.OUT));
+					if (outEdges > 0) {
+						value = (1D / outEdges) * rank;
+					} else {
+						// if no outgoing edges, use 1/n
+						value = (1D / n) * rank;
+					}
 
 					values += value;
 				}
+
+				// final rank for this vertex for this iteration
+				double newRank = values * S + (1 - S) / n;
+				// set calculated rank on a temp property
+				vertex.setProperty(PR_TEMP, newRank);
 			}
 
-			double newRank = values * 0.8;
-			newRank += (1 - 0.8) / n;
-
-			System.out.println("Final page rank " + newRank);
-			// break;
+			// iteration has completed, updated ranks on all vertices to
+			// calculated rank in this round
+			for (Vertex vertex : graph.getVertices()) {
+				vertex.setProperty(PR, vertex.getProperty(PR_TEMP));
+				vertex.removeProperty(PR_TEMP);
+			}
 		}
+
+		for (Vertex vertex : graph.getVertices()) {
+			System.out.println("- - Vertex " + vertex + " Page rank " + vertex.getProperty(PR));
+		}
+
+		// // save the graph in a new file
+		GraphUtils.saveGraph(graph, OUT_GRAPH_FILE);
 	}
 
 	@SuppressWarnings("unused")
